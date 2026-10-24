@@ -1,0 +1,17 @@
+# Jangan commit CV pribadi yang berisi data sensitif
+# Uncomment baris di bawah jika cv-profile.json berisi data asli kamu
+# data/cv-profile.json
+
+# Script scraper (opsional, tidak diperlukan untuk menjalankan app)
+scrape_*.py
+merge_data.py
+check_total.py
+get_selectors.py
+
+# File sementara
+*.pyc
+__pycache__/
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,59 @@
+{
+  "name": "Nama Lengkap Kamu",
+  "phone": "+62 8xx-xxxx-xxxx",
+  "email": "email@example.com",
+  "website": "",
+  "linkedin": "",
+  "location": "Kota, Provinsi",
+  "about": "Tuliskan deskripsi singkat tentang diri kamu, minat, dan tujuan karier kamu di sini.",
+
+  "education": [
+    {
+      "institution": "Nama Universitas / Politeknik",
+      "location": "Kota, Indonesia",
+      "degree": "S-1 Nama Jurusan",
+      "gpa": 3.50,
+      "year": "2021 – 2025"
+    }
+  ],
+
+  "workExperience": [
+    {
+      "company": "Nama Perusahaan / Organisasi",
+      "role": "Posisi / Jabatan",
+      "period": "Bulan Tahun – Bulan Tahun",
+      "location": "Kota, Indonesia"
+    }
+  ],
+
+  "projects": [
+    {
+      "name": "Nama Proyek",
+      "type": "Tipe Proyek (misal: Web App, Machine Learning, dsb.)",
+      "skills": ["Skill 1", "Skill 2", "Skill 3"]
+    }
+  ],
+
+  "skills": {
+    "software": ["Microsoft Excel", "Python", "VS Code"],
+    "technical": ["Data Analysis", "Web Development"],
+    "soft": ["Problem-Solving", "Communication"],
+    "languages": ["Indonesian", "English"]
+  },
+
+  "certifications": [
+    {
+      "name": "Nama Sertifikasi",
+      "issuer": "Lembaga Penerbit",
+      "type": "Bootcamp / Course / Completion",
+      "year": "2025"
+    }
+  ],
+
+  "matchKeywords": [
+    "keyword posisi yang kamu incar 1",
+    "keyword posisi yang kamu incar 2",
+    "nama jurusan kamu dalam huruf kecil",
+    "skill utama kamu"
+  ]
+}

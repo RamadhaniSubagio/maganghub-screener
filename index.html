@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MagangHub Screener — Smart Internship Matcher</title>
+  <meta name="description" content="Screening tool cerdas untuk mencocokkan CV Anda dengan lowongan magang di MagangHub Kemnaker RI">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loader-content">
+      <div class="loader-icon">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="28" stroke="url(#grad1)" stroke-width="4" stroke-dasharray="140 40" class="loader-ring"/>
+          <defs>
+            <linearGradient id="grad1" x1="0" y1="0" x2="64" y2="64">
+              <stop offset="0%" stop-color="#6366f1"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h2>MagangHub Screener</h2>
+      <p>Memuat data lowongan & profil...</p>
+    </div>
+  </div>
+
+  <!-- App Container -->
+  <div id="app" class="app hidden">
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="url(#brandGrad)"/>
+            <path d="M8 22V14L16 8L24 14V22L16 18L8 22Z" fill="white" fill-opacity="0.9"/>
+            <path d="M16 18L24 22V14L16 18Z" fill="white" fill-opacity="0.6"/>
+            <defs>
+              <linearGradient id="brandGrad" x1="0" y1="0" x2="32" y2="32">
+                <stop offset="0%" stop-color="#6366f1"/>
+                <stop offset="100%" stop-color="#06b6d4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-text">MagangHub<br><small>Screener</small></span>
+      </div>
+
+      <div class="nav-links">
+        <a href="#" class="nav-link active" data-page="dashboard" id="nav-dashboard">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="2" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-link" data-page="recommendations" id="nav-recommendations">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L12.09 7.26L18 7.64L13.45 11.34L14.82 17L10 14.27L5.18 17L6.55 11.34L2 7.64L7.91 7.26L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>Rekomendasi</span>
+        </a>
+        <a href="#" class="nav-link" data-page="listings" id="nav-listings">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 4H17M3 8H17M3 12H13M3 16H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Semua Lowongan</span>
+        </a>
+        <a href="#" class="nav-link" data-page="profile" id="nav-profile">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14.134 6.134 11 10 11C13.866 11 17 14.134 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Profil CV</span>
+        </a>
+        <a href="#" class="nav-link" data-page="settings" id="nav-settings">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 2V4M10 16V18M18 10H16M4 10H2M15.66 4.34L14.24 5.76M5.76 14.24L4.34 15.66M15.66 15.66L14.24 14.24M5.76 5.76L4.34 4.34" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>Pengaturan</span>
+        </a>
+      </div>
+
+      <!-- CV Upload Button in Sidebar -->
+      <div class="sidebar-cv-section">
+        <div class="cv-status-row" id="profile-status" onclick="document.getElementById('cv-upload-sidebar').click();" title="Klik untuk upload CV">
+          <div class="status-dot" id="cv-status-dot"></div>
+          <span id="profile-name-display">Upload CV</span>
+        </div>
+        <input type="file" id="cv-upload-sidebar" accept=".json" onchange="handleCVUpload(this)" style="display:none">
+        <button class="btn btn-sm btn-outline sidebar-cv-btn" onclick="resetCV()" title="Ganti CV">🔄</button>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="data-status" id="data-status">
+          <div class="status-dot"></div>
+          <span><span id="listing-count">0</span> lowongan aktif</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Header -->
+    <header class="mobile-header">
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="mobile-brand">MagangHub Screener</div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+      <!-- Dashboard Page -->
+      <section id="page-dashboard" class="page active">
+        <div class="page-header">
+          <div>
+            <h1>Dashboard</h1>
+            <p class="page-subtitle">Ringkasan screening magang Anda</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary" id="btn-run-screening" onclick="runScreening()">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L11.09 7.26L17 7.64L12.45 11.34L13.82 17L9 14.27L4.18 17L5.55 11.34L1 7.64L6.91 7.26L9 2Z" fill="currentColor"/></svg>
+              Jalankan Screening
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card" id="stat-total">
+            <div class="stat-icon blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 5H21M3 9H21M3 13H15M3 17H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-total-num">0</span>
+              <span class="stat-label">Total Lowongan</span>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-match">
+            <div class="stat-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-match-num">0</span>
+              <span class="stat-label">Cocok (≥70%)</span>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-good">
+            <div class="stat-icon yellow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2L14.09 8.26L21 8.64L15.45 13.34L16.82 20L12 16.77L7.18 20L8.55 13.34L3 8.64L9.91 8.26L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-good-num">0</span>
+              <span class="stat-label">Potensial (50-69%)</span>
+            </div>
+          </div>
+          <div class="stat-card" id="stat-saved">
+            <div class="stat-icon purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 5C5 3.89543 5.89543 3 7 3H17C18.1046 3 19 3.89543 19 5V21L12 17L5 21V5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-number" id="stat-saved-num">0</span>
+              <span class="stat-label">Disimpan</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Recommendations Preview -->
+        <div class="section-header">
+          <h2>🏆 Top 5 Rekomendasi</h2>
+          <a href="#" class="view-all-link" onclick="navigateTo('recommendations'); return false;">Lihat Semua →</a>
+        </div>
+        <div id="top-recommendations" class="recommendations-list">
+          <div class="empty-state" id="dashboard-empty">
+            <div class="empty-icon">🔍</div>
+            <h3>Belum ada hasil screening</h3>
+            <p>Klik tombol "Jalankan Screening" untuk mencocokkan CV Anda dengan lowongan yang tersedia</p>
+          </div>
+        </div>
+
+        <!-- Match Distribution Chart -->
+        <div class="section-header" id="chart-section-header" style="display:none;">
+          <h2>📊 Distribusi Match Score</h2>
+        </div>
+        <div id="match-chart" class="match-chart-container" style="display:none;"></div>
+      </section>
+
+      <!-- Recommendations Page -->
+      <section id="page-recommendations" class="page">
+        <div class="page-header">
+          <div>
+            <h1>Rekomendasi</h1>
+            <p class="page-subtitle">Lowongan yang paling sesuai dengan profil Anda</p>
+          </div>
+          <div class="header-actions">
+            <div class="filter-group">
+              <select id="filter-score" class="select-filter" onchange="filterRecommendations()">
+                <option value="all">Semua Skor</option>
+                <option value="high">Tinggi (≥70%)</option>
+                <option value="medium">Sedang (50-69%)</option>
+                <option value="low">Rendah (&lt;50%)</option>
+              </select>
+              <select id="filter-location" class="select-filter" onchange="filterRecommendations()">
+                <option value="all">Semua Lokasi</option>
+              </select>
+              <select id="filter-major" class="select-filter" onchange="filterRecommendations()">
+                <option value="all">Semua Jurusan</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div id="recommendations-full" class="recommendations-list">
+          <div class="empty-state">
+            <div class="empty-icon">⚡</div>
+            <h3>Jalankan screening terlebih dahulu</h3>
+            <p>Pergi ke Dashboard dan klik "Jalankan Screening"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- All Listings Page -->
+      <section id="page-listings" class="page">
+        <div class="page-header">
+          <div>
+            <h1>Semua Lowongan</h1>
+            <p class="page-subtitle">Database lowongan magang dari MagangHub</p>
+          </div>
+          <div class="header-actions">
+            <div class="search-box">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <input type="text" id="search-listings" placeholder="Cari lowongan..." oninput="searchListings(this.value)">
+            </div>
+          </div>
+        </div>
+        <div class="listings-table-container">
+          <table class="listings-table" id="listings-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Posisi</th>
+                <th>Perusahaan/Instansi</th>
+                <th>Lokasi</th>
+                <th>Jurusan</th>
+                <th>Kuota</th>
+                <th>Pendidikan</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="listings-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Profile Page -->
+      <section id="page-profile" class="page">
+        <div class="page-header">
+          <div>
+            <h1>Profil CV</h1>
+            <p class="page-subtitle">Data CV Anda yang digunakan untuk matching</p>
+          </div>
+          <div class="header-actions">
+            <label class="btn btn-primary" for="cv-upload-profile" style="cursor:pointer;">
+              📄 Upload CV Baru
+            </label>
+            <input type="file" id="cv-upload-profile" accept=".json" onchange="handleCVUpload(this)" style="display:none">
+            <button class="btn btn-outline" onclick="resetCV()">🗑️ Reset CV</button>
+          </div>
+        </div>
+
+        <div class="profile-grid">
+          <!-- Personal Info Card -->
+          <div class="profile-card" id="profile-personal">
+            <div class="card-header">
+              <h3>👤 Informasi Pribadi</h3>
+            </div>
+            <div class="card-body" id="personal-info-body"></div>
+          </div>
+
+          <!-- Education Card -->
+          <div class="profile-card" id="profile-education">
+            <div class="card-header">
+              <h3>🎓 Pendidikan</h3>
+            </div>
+            <div class="card-body" id="education-body"></div>
+          </div>
+
+          <!-- Skills Card -->
+          <div class="profile-card full-width" id="profile-skills">
+            <div class="card-header">
+              <h3>💡 Skills</h3>
+            </div>
+            <div class="card-body" id="skills-body"></div>
+          </div>
+
+          <!-- Experience Card -->
+          <div class="profile-card" id="profile-experience">
+            <div class="card-header">
+              <h3>💼 Pengalaman Kerja</h3>
+            </div>
+            <div class="card-body" id="experience-body"></div>
+          </div>
+
+          <!-- Certifications Card -->
+          <div class="profile-card" id="profile-certifications">
+            <div class="card-header">
+              <h3>📜 Sertifikasi</h3>
+            </div>
+            <div class="card-body" id="certifications-body"></div>
+          </div>
+
+          <!-- Projects Card -->
+          <div class="profile-card full-width" id="profile-projects">
+            <div class="card-header">
+              <h3>🚀 Proyek</h3>
+            </div>
+            <div class="card-body" id="projects-body"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Page -->
+      <section id="page-settings" class="page">
+        <div class="page-header">
+          <div>
+            <h1>Pengaturan</h1>
+            <p class="page-subtitle">Konfigurasi bobot matching & data</p>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>⚖️ Bobot Matching</h3>
+            <p class="settings-desc">Atur prioritas kriteria matching sesuai kebutuhan Anda</p>
+            <div class="weight-sliders">
+              <div class="weight-item">
+                <label>Kesesuaian Jurusan</label>
+                <div class="slider-row">
+                  <input type="range" id="weight-major" min="0" max="100" value="35" oninput="updateWeightDisplay(this)">
+                  <span class="weight-value" id="weight-major-val">35%</span>
+                </div>
+              </div>
+              <div class="weight-item">
+                <label>Relevansi Posisi</label>
+                <div class="slider-row">
+                  <input type="range" id="weight-title" min="0" max="100" value="30" oninput="updateWeightDisplay(this)">
+                  <span class="weight-value" id="weight-title-val">30%</span>
+                </div>
+              </div>
+              <div class="weight-item">
+                <label>Kesesuaian Pendidikan</label>
+                <div class="slider-row">
+                  <input type="range" id="weight-education" min="0" max="100" value="20" oninput="updateWeightDisplay(this)">
+                  <span class="weight-value" id="weight-education-val">20%</span>
+                </div>
+              </div>
+              <div class="weight-item">
+                <label>Kuota Tersedia</label>
+                <div class="slider-row">
+                  <input type="range" id="weight-quota" min="0" max="100" value="15" oninput="updateWeightDisplay(this)">
+                  <span class="weight-value" id="weight-quota-val">15%</span>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="saveWeights()">Simpan Bobot</button>
+          </div>
+
+          <div class="settings-card">
+            <h3>📦 Manajemen Data</h3>
+            <p class="settings-desc">Import/export data lowongan dan hasil screening</p>
+            <div class="data-actions">
+              <div class="action-item">
+                <label class="btn btn-outline" for="import-json">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 12V14C3 15.1 3.9 16 5 16H13C14.1 16 15 15.1 15 14V12M9 2V11M9 11L6 8M9 11L12 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Import Lowongan (JSON)
+                </label>
+                <input type="file" id="import-json" accept=".json" onchange="importListings(this)" style="display:none">
+              </div>
+              <div class="action-item">
+                <button class="btn btn-outline" onclick="exportResults()">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 12V14C3 15.1 3.9 16 5 16H13C14.1 16 15 15.1 15 14V12M9 11V2M9 2L6 5M9 2L12 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Export Hasil Screening
+                </button>
+              </div>
+              <div class="action-item">
+                <button class="btn btn-danger" onclick="clearAllData()">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5H15M6 5V3H12V5M7 8V14M11 8V14M5 5L6 16H12L13 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Hapus Semua Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-card">
+            <h3>ℹ️ Tentang</h3>
+            <p class="settings-desc">MagangHub Screener v2.0</p>
+            <div class="about-info">
+              <p>Tool screening cerdas untuk mencocokkan CV Anda dengan lowongan magang di MagangHub Kemnaker RI. Siapapun bisa menggunakan tool ini — cukup upload CV dalam format JSON.</p>
+              <p class="about-meta">Data source: <a href="https://maganghub.kemnaker.go.id" target="_blank" rel="noopener">maganghub.kemnaker.go.id</a></p>
+              <p class="about-meta">Made with ❤️ by <strong>Muhammad Ramdhani Subagio</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Onboarding Modal (First-time users) -->
+  <div id="onboarding-modal" class="modal-overlay" onclick="closeOnboarding(event)">
+    <div class="modal-content onboarding-modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeOnboarding()" aria-label="Close">&times;</button>
+      <div class="onboarding-body">
+        <div class="onboarding-icon">📄</div>
+        <h2>Selamat Datang di MagangHub Screener!</h2>
+        <p style="color:var(--text-secondary); margin-bottom: 1.5rem;">
+          Tool ini akan mencocokkan CV kamu dengan <strong>200+ lowongan magang</strong> dari MagangHub Kemnaker RI secara otomatis.
+        </p>
+
+        <div class="onboarding-steps">
+          <div class="onboarding-step">
+            <div class="step-number">1</div>
+            <div>
+              <strong>Siapkan file CV</strong>
+              <p>Buat file <code>cv-profile.json</code> berdasarkan template yang tersedia. Lihat file <code>data/cv-template.json</code> sebagai contoh format.</p>
+            </div>
+          </div>
+          <div class="onboarding-step">
+            <div class="step-number">2</div>
+            <div>
+              <strong>Upload CV kamu</strong>
+              <p>Klik tombol di bawah untuk mengupload file JSON CV kamu.</p>
+            </div>
+          </div>
+          <div class="onboarding-step">
+            <div class="step-number">3</div>
+            <div>
+              <strong>Jalankan Screening</strong>
+              <p>Klik "Jalankan Screening" di Dashboard dan lihat lowongan mana yang paling cocok!</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <label class="btn btn-primary" for="cv-upload-onboarding" style="cursor:pointer; flex:1; min-width:200px; justify-content:center;">
+            📄 Upload CV (JSON)
+          </label>
+          <input type="file" id="cv-upload-onboarding" accept=".json" onchange="handleCVUpload(this)" style="display:none">
+          <button class="btn btn-outline" onclick="closeOnboarding()" style="flex:1; min-width:150px;">
+            Nanti Saja
+          </button>
+        </div>
+
+        <p style="color:var(--text-muted); font-size:0.75rem; margin-top:1rem; text-align:center;">
+          💡 Lihat file <code>data/cv-template.json</code> untuk contoh format CV yang benar.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="detail-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/matcher.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{
+  "name": "Muhammad Ramdhani Subagio",
+  "phone": "-",
+  "email": "contact@ramadhanisubagio.my.id",
+  "website": "ramadhanisubagio.my.id",
+  "linkedin": "www.linkedin.com/in/muhammadramadhanisubagio",
+  "location": "Yogyakarta, Indonesia",
+  "about": "Fresh graduate in Informatics from Universitas Amikom Yogyakarta with a strong passion for bridging technology and business. Solid skills in research, data analysis, and project planning. Fast learner with a proactive attitude. Interested in data analysis, business strategy, visualization and technical support.",
+  "education": [
+    {
+      "institution": "Universitas Amikom Yogyakarta",
+      "location": "Sleman, Indonesia",
+      "degree": "S-1 Informatika",
+      "gpa": 3.86,
+      "year": "2022 – 2026"
+    },
+    {
+      "institution": "SMK SMTI Yogyakarta",
+      "location": "Yogyakarta, Indonesia",
+      "degree": "Industrial Chemistry",
+      "grade": 81,
+      "year": "2018 – 2021"
+    }
+  ],
+  "workExperience": [
+    {
+      "company": "Universitas Amikom Yogyakarta",
+      "role": "Technical Laboratory & Studio",
+      "period": "August 2025 – Present",
+      "location": "Sleman, Indonesia"
+    },
+    {
+      "company": "Universitas Amikom Yogyakarta",
+      "role": "Teaching Assistant - Computer Graphics & Graphic Design",
+      "period": "March – August 2025",
+      "location": "Sleman, Indonesia"
+    },
+    {
+      "company": "PT Indotaichen Textile Industry",
+      "role": "Bleaching Machine Operator",
+      "period": "2021 – 2022",
+      "location": "Tangerang, Indonesia"
+    }
+  ],
+  "projects": [
+    {
+      "name": "AI Face Fake Detection",
+      "type": "Machine Learning - Final Project",
+      "skills": ["Deep Learning", "ResNet-50", "Image Classification", "Data Preprocessing", "Model Evaluation"]
+    },
+    {
+      "name": "Cahaya Hati",
+      "type": "UI/UX Product Landing Page - Competition",
+      "skills": ["UI/UX Design", "Wireframing", "Information Architecture", "User Flow"]
+    },
+    {
+      "name": "PawPaw",
+      "type": "UI/UX Mobile - Competition",
+      "skills": ["Mobile Design", "UI/UX", "Booking Flow", "Information Architecture"]
+    }
+  ],
+  "skills": {
+    "software": [
+      "Python", "Google Colab", "Kaggle Notebook", "Microsoft Excel",
+      "SQL", "Visual Studio Code", "HTML", "CSS",
+      "Figma", "FigJam", "Adobe Photoshop", "Adobe Illustrator", "CapCut",
+      "Microsoft Word", "Microsoft PowerPoint"
+    ],
+    "technical": [
+      "Exploratory Data Analysis (EDA)", "Data Cleaning & Preprocessing",
+      "Data Visualization", "Dashboard Building & Reporting",
+      "Descriptive & Inferential Statistics", "Product Analysis",
+      "User Research", "Data Storytelling",
+      "Logic & Algorithms", "HTML", "CSS",
+      "UI Design", "UX Design", "Wireframing & Prototyping",
+      "Design System", "User Journey Mapping", "Heuristic Evaluation",
+      "Responsive & Mobile-First Design"
+    ],
+    "soft": [
+      "Collaborative", "Adaptable", "Detail-Oriented", "Problem-Solving",
+      "Effective Communication", "Time Management", "Data-Informed Decision Making"
+    ],
+    "languages": ["Indonesian", "English", "Javanese"]
+  },
+  "certifications": [
+    {
+      "name": "Data Analyst (Excel, SQL, Python, Looker Studio)",
+      "issuer": "KarirNex Indonesia",
+      "type": "Bootcamp",
+      "year": "2026"
+    },
+    {
+      "name": "Data Analyst",
+      "issuer": "SmartPath Indonesia",
+      "type": "Bootcamp",
+      "year": "2024"
+    },
+    {
+      "name": "Photoshop Class",
+      "issuer": "Rubrik Grafis Indonesia",
+      "type": "Completion",
+      "year": "2022"
+    }
+  ],
+  "matchKeywords": [
+    "data analyst", "data analysis", "data visualization", "python", "sql",
+    "excel", "eda", "data cleaning", "data preprocessing", "dashboard",
+    "statistics", "reporting", "data storytelling", "machine learning",
+    "informatika", "teknik informatika", "sistem informasi", "ilmu komputer",
+    "sains data", "data science", "looker studio", "google colab"
+  ]
+}
